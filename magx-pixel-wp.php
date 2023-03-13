@@ -21,7 +21,7 @@ add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'magx_pixel_add_
 register_deactivation_hook( __FILE__, 'magx_pixel_deactivate' );
 
 function magx_pixel_deactivate(){
-	
+	delete_option( 'magx_pixel' );
 }
 
 function magx_pixel_get_support_email(){
@@ -77,9 +77,8 @@ function magx_ttd_pixel_section_callback( $args ) {
 	?>
 	<p id="<?php echo esc_attr( $args['id'] ); ?>">
 	Before enabling this setting, please consider if you
-	Find your pixel ID in the .txt file, as highlighted below.
-	<code><br/>
-	...<br/>
+	Find your pixel ID in the .txt file, as highlighted below.<br/>
+	<code>...<br/>
 	universalPixelApi.init("eac6kka", ["<strong>xxxxxxx</strong>"], "https://insight.adsrvr.org/track/up");<br/>
 	...
 	</code>
@@ -104,8 +103,13 @@ function magx_pixel_id_callback( $args ) {
 		
 	?>
 	<input type="text" id="<?php echo esc_attr( $args['label_for'] ); ?>"
-			name="magx_pixel[<?php echo esc_attr( $args['label_for'] ); ?>]" value="<?php echo esc_attr( trim( $options['magx_pixel_id'] ) ) ;?> ">
-	<?php
+			name="magx_pixel[<?php echo esc_attr( $args['label_for'] ); ?>]" <?php
+			if(isset( $options['magx_pixel_id']) && is_string( $options['magx_pixel_id'] )){
+					echo 'value="'. esc_attr( trim( $options['magx_pixel_id'] ) ) .'"';
+			} else {
+				
+			}
+			echo '">';
 	} else {
 		?>
 		<input type="text" id="<?php echo esc_attr( $args['label_for'] ); ?>" disabled readonly
@@ -154,7 +158,7 @@ function magx_pixel_display_options_page() {
 	// WordPress will add the "settings-updated" $_GET parameter to the url
 	if ( isset( $_GET['settings-updated'] ) ) {
 		// add settings saved message with the class of "updated"
-		add_settings_error( 'magx_pixel_messages', 'magx_pixel_messages', __( 'Settings Saved', 'magx' ), 'updated' );
+		//add_settings_error( 'magx_pixel_messages', 'magx_pixel_messages', __( 'Settings Saved', 'magx' ), 'updated' );
 	}
 
 	// show error/update messages
