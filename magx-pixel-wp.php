@@ -10,7 +10,6 @@
  * Author URI:        https://theMAGXgroup.com
  * License:           MIT
  * License URI:       https://opensource.org/license/mit/
- * Update URI:        https://example.com/my-plugin/
  * Text Domain:       magx
  * Support:      	  digital-ads@magxgroup.com
  */	
